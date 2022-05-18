@@ -8,6 +8,14 @@ App is meant to be used on campus grounds.
 
 As you can probably tell, this is VERY VERY EARLY stage. I still need to layout the requirements of the app, design, technology stack to be used and so on. Feel free to contribute at any stage.
 
+## Design
+![image](https://user-images.githubusercontent.com/74866082/169036708-b071389b-30a7-4adf-8e1c-8c17421db2a5.png)
+![image](https://user-images.githubusercontent.com/74866082/169036858-87b7d49d-d353-49ba-baf0-5c74e540f19e.png)
+![image](https://user-images.githubusercontent.com/74866082/169036912-d93fec28-22ab-4db6-8e34-1844894c874b.png)
+![image](https://user-images.githubusercontent.com/74866082/169037230-34849a8c-d2a8-4c98-afb1-a6d69bfe9af4.png)
+![image](https://user-images.githubusercontent.com/74866082/169037297-b4b55762-1934-4865-8d55-170ba3138fd7.png)
+
+
 ## Requirements
 
 The idea is as follows. I'll be creating an application that is sort of like a mash-up between Uber ( in terms of request and having things time-based, Tinder ( for their card matching ), and OkCupid ( for their heavy personality profiling )
