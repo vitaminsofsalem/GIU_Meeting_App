@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
+import FontText from "../../components/FontText";
 
 export default function Onboarding() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Onboarding</Text>
-      <Text>logo goes here 😺</Text>
+      <FontText type="black" style={styles.text}>
+        Onboarding
+      </FontText>
+      <FontText>logo goes here 😺</FontText>
     </View>
   );
 }

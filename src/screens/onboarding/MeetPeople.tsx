@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from "react-native";
+import React from "react";
+import FontText from "../../components/FontText";
 
 export default function MeetPeople() {
   return (
     <View>
-      <Text>MeetPeople</Text>
+      <FontText>MeetPeople</FontText>
     </View>
-  )
+  );
 }
