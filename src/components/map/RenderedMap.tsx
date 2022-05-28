@@ -63,7 +63,6 @@ export default function RenderedMap({ isPannable }: RenderedMapProps) {
   const ParentView = isPannable ? GestureDetector : View;
 
   return (
-    // <GestureDetector gesture={panGesture}> //Use this to add panning (removed for now / zoom more important)
     <ParentView gesture={panGesture}>
       <View
         style={{
