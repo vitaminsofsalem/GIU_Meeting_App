@@ -16,7 +16,7 @@ export function SelectLocation(props: SelectLocationProps) {
     <BottomContainer style={styles.mainContainer}>
       <View style={styles.topContainer}>
         <FontText style={styles.title} type="medium">
-          Request Meeting?
+          Request meeting?
         </FontText>
         <View style={styles.profileImageContainer}>
           <Image
