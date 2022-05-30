@@ -1,5 +1,6 @@
 import { StyleSheet, View, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { CustomButton } from "../../../../components/CustomButton";
 import FontText from "../../../../components/FontText";
 import { MapLocation } from "../../../../model/MapLocation";
 import { BottomContainer } from "../BottomContainer";
@@ -45,6 +46,13 @@ export function SelectLocation(props: SelectLocationProps) {
         ItemSeparatorComponent={() => <View style={{ paddingStart: 20 }} />}
         showsHorizontalScrollIndicator={false}
       />
+      <CustomButton
+        style={styles.continueButton}
+        onPress={() => {}}
+        enabled={!!props.selectedLocation}
+      >
+        Continue
+      </CustomButton>
     </BottomContainer>
   );
 }
@@ -72,5 +80,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+  },
+  continueButton: {
+    marginTop: 10,
+    alignSelf: "flex-end",
   },
 });
