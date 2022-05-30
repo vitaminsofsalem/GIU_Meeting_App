@@ -113,7 +113,11 @@ export default function FontText({
   return (
     <Text
       {...props}
-      style={[props.style, fontsLoaded ? { fontFamily: selectedFont } : {}]}
+      style={[
+        props.style,
+        fontsLoaded ? { fontFamily: selectedFont } : {},
+        { paddingTop: 1.5 }, //To adjust uneven baseline of font
+      ]}
     />
   );
 }
