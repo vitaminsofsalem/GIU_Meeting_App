@@ -27,7 +27,12 @@ export default function MapView(props: MapViewProps) {
         const currentZoom: number = zoomableViewEventObject.zoomLevel;
         setIsPannable(currentZoom <= 1);
       }}
-      style={{ flex: 1, backgroundColor: "#f1f3f4" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#f1f3f4",
+        position: "absolute",
+      }}
     >
       <View
         style={{
