@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "620119032265",
+    "project_id": "rendezvous-57b08",
+    "storage_bucket": "rendezvous-57b08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620119032265:android:7f911ce5953749875a2818",
+        "android_client_info": {
+          "package_name": "com.giu.rendezvous"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620119032265-q8g1l28apigsv7rnfivr2eabm55chehk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXYM_Hdm0FmbidD99q7nZAqP7KbLvSIG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620119032265-q8g1l28apigsv7rnfivr2eabm55chehk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
