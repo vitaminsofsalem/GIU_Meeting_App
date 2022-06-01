@@ -9,4 +9,5 @@ export interface User {
   photoUrl?: string;
   intrests: string[];
   meetUpHistory: MeetRequest[];
+  currentRequest?: string;
 }

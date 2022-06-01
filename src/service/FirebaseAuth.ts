@@ -1,16 +1,7 @@
 import firebaseAuth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 export class FirebaseAuth {
-  static instance?: FirebaseAuth;
-
-  static getInstance(): FirebaseAuth {
-    if (!this.instance) {
-      this.instance = new FirebaseAuth();
-    }
-    return this.instance;
-  }
-
-  auth = firebaseAuth();
+  private auth = firebaseAuth();
 
   subscribeToAuthChangesAndReturnUnsubscribe(
     onAuthStateChange: (isLoggedIn: boolean) => void

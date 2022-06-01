@@ -1,12 +1,9 @@
 import { User } from "./User";
 
 export interface MeetRequest {
+  id: string;
   requestCreator: User;
   meetLocation: string;
-  startTime: number; //time in milliseconds
-  endTime: number;
+  endTime: number; //time in millis;
   activity: string;
-  numberOfAccepts: 0 | 1 | 2; //Either accepted by none, one, or both
-  pendingMatch?: User;
-  acceptedMatch?: User;
 }
