@@ -140,8 +140,6 @@ export class FirebaseDatabase {
     }
   }
 
-  //Subscribes to matches changes.
-  //Oldest + already accepted take priority
   subscribeToMatches(
     userId: string,
     onMatchesResult: (matches: Match[]) => void
