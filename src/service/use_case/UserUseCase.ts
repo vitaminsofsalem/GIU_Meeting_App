@@ -1,11 +1,13 @@
 import storage from "@react-native-firebase/storage";
 import { User } from "../../model/User";
 import { ServiceFactory } from "../ServiceFactory";
+import messaging from "@react-native-firebase/messaging";
 
 export class UserUseCase {
   private auth = ServiceFactory.getFirebaseAuth();
   private db = ServiceFactory.getFirebaseDatabase();
   private storageRef = storage();
+  private messagingRef = messaging();
 
   async createAccount(
     email: string,
@@ -19,6 +21,7 @@ export class UserUseCase {
       password,
       `${firstName} ${lastName}`
     );
+
     await this.db.addUser({
       email,
       firstName,
@@ -28,10 +31,21 @@ export class UserUseCase {
       intrests: [],
       meetUpHistory: [],
     });
+    await this.db.addFCMToken(user.uid, await this.messagingRef.getToken());
   }
 
   async logIn(email: string, password: string) {
-    await this.auth.loginWithEmailAndPassword(email, password);
+    const user = await this.auth.loginWithEmailAndPassword(email, password);
+    await this.db.addFCMToken(user.uid, await this.messagingRef.getToken());
+  }
+
+  async logOut() {
+    const user = this.auth.getCurrentUser();
+    if (!user) {
+      throw Error("Already logged out");
+    }
+    await this.db.deletFCMToken(user.uid, await this.messagingRef.getToken());
+    this.auth.logOut();
   }
 
   async uploadUserPhoto(photoFilePath: string) {

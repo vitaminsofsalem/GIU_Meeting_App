@@ -10,4 +10,5 @@ export interface User {
   intrests: string[];
   meetUpHistory: MeetRequest[];
   currentRequest?: string;
+  fcmTokens?: string[];
 }

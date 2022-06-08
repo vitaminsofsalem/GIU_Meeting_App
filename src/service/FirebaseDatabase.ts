@@ -159,4 +159,16 @@ export class FirebaseDatabase {
       });
     return unsubscribe;
   }
+
+  async addFCMToken(id: string, token: string) {
+    await this.usersCollection
+      .doc(id)
+      .update({ fcmTokens: firestore.FieldValue.arrayUnion(token) });
+  }
+
+  async deletFCMToken(id: string, token: string) {
+    await this.usersCollection
+      .doc(id)
+      .update({ fcmTokens: firestore.FieldValue.arrayRemove(token) });
+  }
 }
