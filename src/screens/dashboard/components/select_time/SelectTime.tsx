@@ -23,6 +23,7 @@ interface SelectTimeProps {
   onSelectedTimeChange: (hours: number, minutes: number) => void;
   onSelectedActivityChange: (activity: string) => void;
   onBackPress: () => void;
+  onRequestPress: () => void;
 }
 
 export default function SelectTime(props: SelectTimeProps) {
@@ -135,7 +136,7 @@ export default function SelectTime(props: SelectTimeProps) {
             <View style={{ width: 20 }} />
             <CustomButton
               style={styles.continueButton}
-              onPress={() => {}}
+              onPress={props.onRequestPress}
               enabled={
                 !!props.selectedActivity &&
                 props.selectedTimeHour !== undefined &&

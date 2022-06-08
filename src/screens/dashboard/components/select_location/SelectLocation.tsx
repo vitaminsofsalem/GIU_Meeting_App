@@ -10,7 +10,7 @@ interface SelectLocationProps {
   onLocationSelected: (selected: MapLocation) => void;
   selectedLocation?: MapLocation;
   allLocations: MapLocation[];
-  onContinueClick: () => void;
+  onContinuePress: () => void;
 }
 
 export function SelectLocation(props: SelectLocationProps) {
@@ -49,7 +49,7 @@ export function SelectLocation(props: SelectLocationProps) {
       />
       <CustomButton
         style={styles.continueButton}
-        onPress={props.onContinueClick}
+        onPress={props.onContinuePress}
         enabled={!!props.selectedLocation}
       >
         Continue

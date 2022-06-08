@@ -5,6 +5,7 @@ import { MapLocation, MAP_LOCATIONS } from "../../model/MapLocation";
 import { BottomContainer } from "./components/BottomContainer";
 import { SelectLocation } from "./components/select_location/SelectLocation";
 import SelectTime from "./components/select_time/SelectTime";
+import WaitingForMatch from "./components/WaitingForMatch";
 
 export default function Dashboard() {
   const [selectedLocation, setSelectedLocation] = useState<
@@ -33,7 +34,7 @@ export default function Dashboard() {
           allLocations={MAP_LOCATIONS}
           onLocationSelected={setSelectedLocation}
           selectedLocation={selectedLocation}
-          onContinueClick={() => setCurrentStep(1)}
+          onContinuePress={() => setCurrentStep(1)}
         />
       )}
       {currentStep === 1 && (
@@ -47,7 +48,11 @@ export default function Dashboard() {
           selectedTimeHour={selectedTimeHour}
           selectedTimeMin={selectedTimeMin}
           onBackPress={() => setCurrentStep(currentStep - 1)}
+          onRequestPress={() => setCurrentStep(2)}
         />
+      )}
+      {currentStep === 2 && (
+        <WaitingForMatch onCancelPress={() => setCurrentStep(0)} />
       )}
     </View>
   );

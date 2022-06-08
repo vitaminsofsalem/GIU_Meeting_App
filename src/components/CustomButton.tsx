@@ -34,7 +34,7 @@ export function CustomButton({
       rippleContainerBorderRadius={styles.mainButton.borderRadius}
       rippleColor={enabled ? rippleColor : "#EBEBE4"}
     >
-      <FontText style={[styles.text, { color: textColor }]}>
+      <FontText type="semi_bold" style={[styles.text, { color: textColor }]}>
         {children}
       </FontText>
     </Ripple>
