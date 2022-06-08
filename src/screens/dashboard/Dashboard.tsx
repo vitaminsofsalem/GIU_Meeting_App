@@ -6,6 +6,7 @@ import { BottomContainer } from "./components/BottomContainer";
 import { SelectLocation } from "./components/select_location/SelectLocation";
 import SelectTime from "./components/select_time/SelectTime";
 import WaitingForMatch from "./components/WaitingForMatch";
+import Match from "./components/Match";
 
 export default function Dashboard() {
   const [selectedLocation, setSelectedLocation] = useState<
@@ -51,8 +52,15 @@ export default function Dashboard() {
           onRequestPress={() => setCurrentStep(2)}
         />
       )}
+      {false && <WaitingForMatch onCancelPress={() => setCurrentStep(0)} />}
+
       {currentStep === 2 && (
-        <WaitingForMatch onCancelPress={() => setCurrentStep(0)} />
+        <Match
+          onAcceptPress={() => {}}
+          onDeclinePress={() => {}}
+          onFinishPress={() => {}}
+          isFinalMatch={true}
+        />
       )}
     </View>
   );
