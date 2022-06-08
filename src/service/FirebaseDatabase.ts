@@ -6,13 +6,6 @@ import { User } from "../model/User";
 export class FirebaseDatabase {
   static instance?: FirebaseDatabase;
 
-  static getInstance(): FirebaseDatabase {
-    if (!this.instance) {
-      this.instance = new FirebaseDatabase();
-    }
-    return this.instance;
-  }
-
   private db = firestore();
   private usersCollection = this.db.collection("users");
   private requestsCollection = this.db.collection("requests");

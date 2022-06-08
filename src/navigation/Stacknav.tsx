@@ -6,7 +6,7 @@ import MakeFriends from "../screens/onboarding/MakeFriends";
 import Dashboard from "../screens/dashboard/Dashboard";
 
 //Incase a page accepts some paramter from navigation, add them here
-type ParamList = {
+export type ParamList = {
   Onboarding: undefined;
   MeetPeople: undefined;
   MakeFriends: undefined;
@@ -18,7 +18,7 @@ const Stack = createStackNavigator<ParamList>();
 export default function Stacknav() {
   return (
     <Stack.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="Onboarding"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Onboarding" component={Onboarding} />

@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { TimePickerModal } from "react-native-paper-dates";
-import { CustomButton } from "../../../../components/CustomButton";
-import FontText from "../../../../components/FontText";
-import { MAIN_BLUE } from "../../../../util/Colors";
-import { BottomContainer } from "../BottomContainer";
+import { CustomButton } from "../../../components/CustomButton";
+import FontText from "../../../components/FontText";
+import { MAIN_BLUE } from "../../../util/Colors";
+import { BottomContainer } from "./BottomContainer";
 import ModalSelector from "react-native-modal-selector";
 
 const activities = [
@@ -91,7 +91,7 @@ export default function SelectTime(props: SelectTimeProps) {
               <View style={styles.timeIconContainer}>
                 <Image
                   style={styles.timeIcon}
-                  source={require("../../../../../assets/icon_time.png")}
+                  source={require("../../../../assets/icon_time.png")}
                 />
               </View>
             </Ripple>
@@ -110,7 +110,7 @@ export default function SelectTime(props: SelectTimeProps) {
               </FontText>
               <Image
                 style={styles.bottomArrowIcon}
-                source={require("../../../../../assets/icon_arrow_down.png")}
+                source={require("../../../../assets/icon_arrow_down.png")}
               />
             </Ripple>
           </View>
@@ -130,7 +130,7 @@ export default function SelectTime(props: SelectTimeProps) {
             >
               <Image
                 style={styles.backArrowIcon}
-                source={require("../../../../../assets/icon_arrow_back.png")}
+                source={require("../../../../assets/icon_arrow_back.png")}
               />
             </Ripple>
             <View style={{ width: 20 }} />
@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+
     height: 40,
     borderRadius: 5,
     marginTop: 3,

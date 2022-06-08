@@ -1,26 +1,51 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapView from "../../components/map/MapView";
 import { MapLocation, MAP_LOCATIONS } from "../../model/MapLocation";
 import { BottomContainer } from "./components/BottomContainer";
 import { SelectLocation } from "./components/select_location/SelectLocation";
-import SelectTime from "./components/select_time/SelectTime";
+import SelectTime from "./components/SelectTime";
 import WaitingForMatch from "./components/WaitingForMatch";
 import Match from "./components/Match";
+import { ServiceFactory } from "../../service/ServiceFactory";
+import { Match as MatchModel } from "../../model/Match";
+import { UseCaseFactory } from "../../service/UseCaseFactory";
 
 export default function Dashboard() {
-  const [selectedLocation, setSelectedLocation] = useState<
-    MapLocation | undefined
-  >(undefined);
-  const [selectedTimeHour, setSelectedTimeHour] = useState<
-    number | undefined
-  >();
-  const [selectedTimeMin, setSelectedTimeMin] = useState<number | undefined>();
-  const [selectedActivity, setSelectedActivity] = useState<
-    string | undefined
-  >();
-
+  const [selectedLocation, setSelectedLocation] = useState<MapLocation>();
+  const [selectedTimeHour, setSelectedTimeHour] = useState<number>();
+  const [selectedTimeMin, setSelectedTimeMin] = useState<number>();
+  const [selectedActivity, setSelectedActivity] = useState<string>();
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentMatch, setCurrentMatch] = useState<MatchModel>();
+
+  const matchUseCase = UseCaseFactory.getMatchUseCase();
+
+  const createMatch = () => {
+    const currentDate = new Date(Date.now());
+    matchUseCase.matchAndCreateRequest(
+      selectedLocation!!.label,
+      new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        undefined,
+        selectedTimeHour,
+        selectedTimeMin
+      ).getDate(),
+      selectedActivity!!
+    );
+  };
+
+  const subscribeToMatches = async () => {
+    const unsubscribe = await matchUseCase.subscribeToMatch((match) => {
+      setCurrentMatch(match);
+    });
+    return unsubscribe;
+  };
+
+  useEffect(() => {
+    subscribeToMatches();
+  }, []);
 
   return (
     <View style={styles.container}>
