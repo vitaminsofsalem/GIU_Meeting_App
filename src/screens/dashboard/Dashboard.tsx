@@ -10,13 +10,13 @@ export default function Dashboard() {
   const [selectedLocation, setSelectedLocation] = useState<
     MapLocation | undefined
   >(undefined);
-  const [selectedTimeHour, setSelectedTimeHour] = useState<number | undefined>(
-    undefined
-  );
-  const [selectedTimeMin, setSelectedTimeMin] = useState<number | undefined>(
-    undefined
-  );
-  const [selectedActivity, setSelectedActivity] = useState("");
+  const [selectedTimeHour, setSelectedTimeHour] = useState<
+    number | undefined
+  >();
+  const [selectedTimeMin, setSelectedTimeMin] = useState<number | undefined>();
+  const [selectedActivity, setSelectedActivity] = useState<
+    string | undefined
+  >();
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -46,6 +46,7 @@ export default function Dashboard() {
           selectedActivity={selectedActivity}
           selectedTimeHour={selectedTimeHour}
           selectedTimeMin={selectedTimeMin}
+          onBackPress={() => setCurrentStep(currentStep - 1)}
         />
       )}
     </View>

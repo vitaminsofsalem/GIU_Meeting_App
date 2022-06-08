@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { TimePickerModal } from "react-native-paper-dates";
@@ -6,17 +6,28 @@ import { CustomButton } from "../../../../components/CustomButton";
 import FontText from "../../../../components/FontText";
 import { MAIN_BLUE } from "../../../../util/Colors";
 import { BottomContainer } from "../BottomContainer";
+import ModalSelector from "react-native-modal-selector";
+
+const activities = [
+  "Go Swimming",
+  "Play Soccer",
+  "Study",
+  "Some other activity1",
+  "Activity 3",
+];
 
 interface SelectTimeProps {
   selectedTimeHour?: number;
   selectedTimeMin?: number;
-  selectedActivity: string;
+  selectedActivity?: string;
   onSelectedTimeChange: (hours: number, minutes: number) => void;
   onSelectedActivityChange: (activity: string) => void;
+  onBackPress: () => void;
 }
 
 export default function SelectTime(props: SelectTimeProps) {
   const [timePickerVisible, setTimePickerVisible] = useState(false);
+  const actPicker = useRef() as React.MutableRefObject<ModalSelector<any>>;
 
   const onSelectTimePress = () => {
     setTimePickerVisible(true);
@@ -27,8 +38,28 @@ export default function SelectTime(props: SelectTimeProps) {
   };
 
   const onTimeSelected = (hours: number, minutes: number) => {
-    props.onSelectedTimeChange(hours, minutes);
     setTimePickerVisible(false);
+    const currentDate = new Date(Date.now());
+    const currentMin = currentDate.getMinutes();
+    const currentHour = currentDate.getHours();
+
+    //Ensure time is in future, and has not passed
+    if (hours < currentHour) {
+      return;
+    } else if (currentHour === hours && minutes < currentMin) {
+      return;
+    }
+    props.onSelectedTimeChange(hours, minutes);
+  };
+
+  const onSelectActPress = () => {
+    if (actPicker.current) {
+      actPicker.current.open();
+    }
+  };
+
+  const onActSelected = (activity: { label: string }) => {
+    props.onSelectedActivityChange(activity.label);
   };
 
   const currentTime = `${props.selectedTimeHour}:${
@@ -68,7 +99,11 @@ export default function SelectTime(props: SelectTimeProps) {
             <FontText type="light" style={styles.selectionTitle}>
               Activity
             </FontText>
-            <Ripple rippleColor="white" style={styles.selectionValueContainer}>
+            <Ripple
+              onPress={onSelectActPress}
+              rippleColor="white"
+              style={styles.selectionValueContainer}
+            >
               <FontText type="light" style={styles.selectionValueText}>
                 {props.selectedActivity || "Select"}
               </FontText>
@@ -80,6 +115,7 @@ export default function SelectTime(props: SelectTimeProps) {
           </View>
           <View style={styles.botttom}>
             <Ripple
+              onPress={props.onBackPress}
               style={[
                 styles.selectionValueContainer,
                 {
@@ -100,7 +136,11 @@ export default function SelectTime(props: SelectTimeProps) {
             <CustomButton
               style={styles.continueButton}
               onPress={() => {}}
-              enabled={true}
+              enabled={
+                !!props.selectedActivity &&
+                props.selectedTimeHour !== undefined &&
+                props.selectedTimeMin !== undefined
+              }
             >
               Request Booking
             </CustomButton>
@@ -121,6 +161,27 @@ export default function SelectTime(props: SelectTimeProps) {
         animationType="fade"
         locale="en"
       />
+      <ModalSelector
+        ref={actPicker}
+        data={activities.map((item, index) => {
+          return { key: index, label: item };
+        })}
+        onChange={onActSelected}
+        animationType="fade"
+        overlayStyle={{
+          flex: 1,
+          padding: "5%",
+          justifyContent: "flex-end",
+          backgroundColor: "rgba(0,0,0,0.5)",
+        }}
+        optionContainerStyle={{ backgroundColor: "white" }}
+        optionTextStyle={{ fontFamily: "Poppins_400Regular", color: "black" }}
+        cancelStyle={{ backgroundColor: MAIN_BLUE }}
+        cancelTextStyle={{ fontFamily: "Poppins_600SemiBold", color: "white" }}
+        cancelText="Close"
+      >
+        <View />
+      </ModalSelector>
     </>
   );
 }
