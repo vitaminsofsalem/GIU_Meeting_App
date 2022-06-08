@@ -60,6 +60,16 @@ export default function Dashboard() {
           onDeclinePress={() => {}}
           onFinishPress={() => {}}
           isFinalMatch={true}
+          matchedLocation="Platform"
+          matchedUser={{
+            email: "",
+            firstName: "Emilia",
+            lastName: "Clark",
+            gender: "male",
+            id: "21",
+            intrests: [],
+            meetUpHistory: [],
+          }}
         />
       )}
     </View>

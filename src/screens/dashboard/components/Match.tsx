@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { CustomButton } from "../../../components/CustomButton";
 import FontText from "../../../components/FontText";
+import { User } from "../../../model/User";
 import { MAIN_BLUE } from "../../../util/Colors";
 import { BottomContainer } from "./BottomContainer";
 
@@ -10,6 +11,8 @@ interface MatchProps {
   onAcceptPress: () => void;
   onDeclinePress: () => void;
   onFinishPress: () => void;
+  matchedUser: User;
+  matchedLocation: string;
 }
 
 export default function Match(props: MatchProps) {
@@ -24,14 +27,14 @@ export default function Match(props: MatchProps) {
           />
         </View>
         <FontText type="light" style={styles.profileTitle}>
-          Emilia Clark
+          {props.matchedUser.firstName} {props.matchedUser.lastName}
         </FontText>
 
         {props.isFinalMatch && (
           <FontText type="light" style={styles.profileTitle}>
-            Please meet Emilia at{" "}
+            Please meet {props.matchedUser.firstName} at{" "}
             <FontText type="light" style={{ color: MAIN_BLUE }}>
-              Platform
+              {props.matchedLocation}
             </FontText>
           </FontText>
         )}
@@ -41,7 +44,7 @@ export default function Match(props: MatchProps) {
               style={[styles.button, { width: 250 }]}
               onPress={props.onFinishPress}
             >
-              I arrived and met Emilia
+              I arrived and met {props.matchedUser.firstName}
             </CustomButton>
           ) : (
             <>
