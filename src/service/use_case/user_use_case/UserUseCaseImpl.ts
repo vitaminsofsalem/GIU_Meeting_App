@@ -1,9 +1,10 @@
 import storage from "@react-native-firebase/storage";
-import { User } from "../../model/User";
-import { ServiceFactory } from "../ServiceFactory";
+import { User } from "../../../model/User";
+import { ServiceFactory } from "../../ServiceFactory";
 import messaging from "@react-native-firebase/messaging";
+import { UserUseCase } from "./UserUseCase";
 
-export class UserUseCase {
+export class UserUseCaseImpl implements UserUseCase {
   private auth = ServiceFactory.getFirebaseAuth();
   private db = ServiceFactory.getFirebaseDatabase();
 

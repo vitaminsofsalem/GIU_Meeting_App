@@ -1,6 +1,7 @@
 import { MatchUseCase } from "./use_case/match_use_case/MatchUseCase";
 import { MatchUseCaseImpl } from "./use_case/match_use_case/MatchUseCaseImpl";
-import { UserUseCase } from "./use_case/UserUseCase";
+import { UserUseCase } from "./use_case/user_use_case/UserUseCase";
+import { UserUseCaseImpl } from "./use_case/user_use_case/UserUseCaseImpl";
 
 export class UseCaseFactory {
   static matchUseCaseInstance?: MatchUseCase;
@@ -15,7 +16,7 @@ export class UseCaseFactory {
 
   static getUserUseCase(): UserUseCase {
     if (!this.userUseCaseInstance) {
-      this.userUseCaseInstance = new UserUseCase();
+      this.userUseCaseInstance = new UserUseCaseImpl();
     }
     return this.userUseCaseInstance;
   }
