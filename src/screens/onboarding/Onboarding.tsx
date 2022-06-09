@@ -7,8 +7,8 @@ import { ParamList } from "../../navigation/Stacknav";
 import { UseCaseFactory } from "../../service/UseCaseFactory";
 
 export default function Onboarding() {
-  // const userUseCase = UseCaseFactory.getUserUseCase();
-  // const navigation = useNavigation<NavigationProp<ParamList, "Onboarding">>();
+  const userUseCase = UseCaseFactory.getUserUseCase();
+  const navigation = useNavigation<NavigationProp<ParamList, "Onboarding">>();
 
   return (
     <View style={styles.container}>
@@ -16,20 +16,8 @@ export default function Onboarding() {
         Onboarding
       </FontText>
       <FontText>logo goes here 😺</FontText>
-      {/* <CustomButton
-        onPress={() => {
-          userUseCase.createAccount(
-            "email1@email.com",
-            "1q2w3e4r",
-            "Youssef",
-            "Henna",
-            "male"
-          );
-        }}
-      >
-        First user
-      </CustomButton>
-      <CustomButton onPress={() => {}}>Second user</CustomButton> */}
+      <CustomButton onPress={() => {}}>First user</CustomButton>
+      <CustomButton onPress={() => {}}>Second user</CustomButton>
     </View>
   );
 }

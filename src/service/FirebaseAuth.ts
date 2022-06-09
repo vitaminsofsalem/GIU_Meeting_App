@@ -1,19 +1,17 @@
 import firebaseAuth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 export class FirebaseAuth {
-  private auth = firebaseAuth();
-
   subscribeToAuthChangesAndReturnUnsubscribe(
     onAuthStateChange: (isLoggedIn: boolean) => void
   ): () => void {
-    const unsubscribe = this.auth.onAuthStateChanged((user) =>
+    const unsubscribe = firebaseAuth().onAuthStateChanged((user) =>
       onAuthStateChange(!!user)
     );
     return unsubscribe;
   }
 
   getCurrentUser(): FirebaseAuthTypes.User | null {
-    return this.auth.currentUser;
+    return firebaseAuth().currentUser;
   }
 
   async registerWithEmailAndPassword(
@@ -21,7 +19,7 @@ export class FirebaseAuth {
     password: string,
     name: string
   ): Promise<FirebaseAuthTypes.User> {
-    const result = await this.auth.createUserWithEmailAndPassword(
+    const result = await firebaseAuth().createUserWithEmailAndPassword(
       email,
       password
     );
@@ -41,11 +39,14 @@ export class FirebaseAuth {
     email: string,
     password: string
   ): Promise<FirebaseAuthTypes.User> {
-    const result = await this.auth.signInWithEmailAndPassword(email, password);
+    const result = await firebaseAuth().signInWithEmailAndPassword(
+      email,
+      password
+    );
     return result.user;
   }
 
   async logOut() {
-    await this.auth.signOut();
+    await firebaseAuth().signOut();
   }
 }

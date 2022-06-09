@@ -6,8 +6,6 @@ import messaging from "@react-native-firebase/messaging";
 export class UserUseCase {
   private auth = ServiceFactory.getFirebaseAuth();
   private db = ServiceFactory.getFirebaseDatabase();
-  private storageRef = storage();
-  private messagingRef = messaging();
 
   async createAccount(
     email: string,
@@ -31,12 +29,12 @@ export class UserUseCase {
       intrests: [],
       meetUpHistory: [],
     });
-    await this.db.addFCMToken(user.uid, await this.messagingRef.getToken());
+    await this.db.addFCMToken(user.uid, await messaging().getToken());
   }
 
   async logIn(email: string, password: string) {
     const user = await this.auth.loginWithEmailAndPassword(email, password);
-    await this.db.addFCMToken(user.uid, await this.messagingRef.getToken());
+    await this.db.addFCMToken(user.uid, await messaging().getToken());
   }
 
   async logOut() {
@@ -44,7 +42,7 @@ export class UserUseCase {
     if (!user) {
       throw Error("Already logged out");
     }
-    await this.db.deletFCMToken(user.uid, await this.messagingRef.getToken());
+    await this.db.deletFCMToken(user.uid, await messaging().getToken());
     this.auth.logOut();
   }
 
@@ -53,7 +51,7 @@ export class UserUseCase {
     if (!user) {
       throw Error("Can't upload photo when not logged in");
     }
-    const photoRef = this.storageRef.ref(`${user.uid}/profile.png`);
+    const photoRef = storage().ref(`${user.uid}/profile.png`);
     await photoRef.putFile(photoFilePath);
     const downloadUrl = await photoRef.getDownloadURL();
     await this.auth.updateUserPhoto(downloadUrl);
