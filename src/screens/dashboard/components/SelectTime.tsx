@@ -9,11 +9,16 @@ import { BottomContainer } from "./BottomContainer";
 import ModalSelector from "react-native-modal-selector";
 
 const activities = [
-  "Go Swimming",
-  "Play Soccer",
+  "Just talk",
   "Study",
-  "Some other activity1",
-  "Activity 3",
+  "Play soccer",
+  "Play tennis",
+  "Play volleyball",
+  "Play pingpong",
+  "Train at the gym",
+  "Go swimming",
+  "Grab a bite",
+  "Go for a walk",
 ];
 
 interface SelectTimeProps {

@@ -19,7 +19,9 @@ export default function Match(props: MatchProps) {
   return (
     <BottomContainer>
       <View style={styles.mainContainer}>
-        <FontText style={styles.matchFoundTitle}>Match Found</FontText>
+        <FontText style={styles.matchFoundTitle}>
+          {props.isFinalMatch ? "Match Found" : "Possible Match"}
+        </FontText>
         <View style={styles.profileImageContainer}>
           <Image
             style={styles.profileImage}
