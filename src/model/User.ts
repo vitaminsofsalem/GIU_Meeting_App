@@ -1,7 +1,7 @@
 import { MeetRequest } from "./MeetRequest";
 
 export interface User {
-  id?: string;
+  id: string;
   firstName: string;
   lastName: string;
   gender: "male" | "female";

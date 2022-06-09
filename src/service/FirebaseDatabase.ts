@@ -11,11 +11,9 @@ export class FirebaseDatabase {
   private matchesCollection = "matches";
 
   async addUser(user: User) {
-    const id = user.id;
-    delete user.id; //No need to have field for it, will be document id
     await firestore()
       .collection(this.usersCollection)
-      .doc(id)
+      .doc(user.id)
       .set({ ...user });
   }
 
@@ -47,10 +45,10 @@ export class FirebaseDatabase {
       .collection(this.usersCollection)
       .doc(id)
       .get();
-    if (!result.data || !result.exists) {
+    if (!result.data() || !result.exists) {
       throw Error("Failed to get user");
     }
-    return result.data as unknown as User;
+    return result.data() as unknown as User;
   }
 
   async getRequest(id: string): Promise<MeetRequest> {
@@ -58,10 +56,10 @@ export class FirebaseDatabase {
       .collection(this.requestsCollection)
       .doc(id)
       .get();
-    if (!result.data || !result.exists) {
+    if (!result.data() || !result.exists) {
       throw Error("Failed to get user");
     }
-    return result.data as unknown as MeetRequest;
+    return result.data() as unknown as MeetRequest;
   }
 
   async getMatch(id: string): Promise<Match> {
@@ -69,10 +67,10 @@ export class FirebaseDatabase {
       .collection(this.matchesCollection)
       .doc(id)
       .get();
-    if (!result.data || !result.exists) {
-      throw Error("Failed to get user");
+    if (!result.data() || !result.exists) {
+      throw Error("Failed to get match");
     }
-    return result.data as unknown as Match;
+    return result.data() as unknown as Match;
   }
 
   async addToMeetupHistory(id: string, meetup: MeetRequest, match: Match) {
@@ -89,8 +87,11 @@ export class FirebaseDatabase {
       .collection(this.requestsCollection)
       .add({
         ...request,
-        id: undefined,
       });
+    await firestore()
+      .collection(this.requestsCollection)
+      .doc(result.id)
+      .update({ id: result.id });
     return result.id;
   }
 
@@ -101,7 +102,7 @@ export class FirebaseDatabase {
   async getRequests(): Promise<MeetRequest[]> {
     const result = await firestore().collection(this.requestsCollection).get();
     return result.docs.map(
-      (item) => ({ ...item.data, id: item.id } as MeetRequest)
+      (item) => ({ ...item.data(), id: item.id } as MeetRequest)
     );
   }
 
@@ -110,9 +111,13 @@ export class FirebaseDatabase {
       .collection(this.matchesCollection)
       .add({
         ...match,
-        id: undefined,
         timestamp: firestore.FieldValue.serverTimestamp(),
       });
+
+    await firestore()
+      .collection(this.matchesCollection)
+      .doc(result.id)
+      .update({ id: result.id });
     return result.id;
   }
 
@@ -121,10 +126,10 @@ export class FirebaseDatabase {
       .collection(this.matchesCollection)
       .doc(matchId)
       .get();
-    if (!result.data) {
+    if (!result.data()) {
       throw Error("No match with given id");
     }
-    const match = result.data as unknown as Match;
+    const match = result.data() as unknown as Match;
     if (match.user1.id === userId) {
       await firestore()
         .collection(this.matchesCollection)
@@ -180,7 +185,7 @@ export class FirebaseDatabase {
       .onSnapshot((result) => {
         if (result.docs) {
           const mapped = result.docs.map(
-            (item) => ({ ...item.data, id: item.id } as Match)
+            (item) => ({ ...item.data(), id: item.id } as Match)
           );
           const filtered = mapped.filter(
             (item) => item.user1.id === userId || item.user2.id === userId
@@ -188,7 +193,10 @@ export class FirebaseDatabase {
           onMatchesResult(filtered);
         }
       });
-    return unsubscribe;
+    return () => {
+      console.log("Unsubscribed from matches");
+      unsubscribe();
+    };
   }
 
   async addFCMToken(id: string, token: string) {

@@ -23,7 +23,11 @@ export default function Match(props: MatchProps) {
         <View style={styles.profileImageContainer}>
           <Image
             style={styles.profileImage}
-            source={require("../../../../assets/celebrity-scarlet.jpg")}
+            source={
+              props.matchedUser
+                ? { uri: props.matchedUser.photoUrl }
+                : require("../../../../assets/icon.png")
+            }
           />
         </View>
         <FontText type="light" style={styles.profileTitle}>

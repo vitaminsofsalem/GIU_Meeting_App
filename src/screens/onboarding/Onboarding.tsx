@@ -16,8 +16,22 @@ export default function Onboarding() {
         Onboarding
       </FontText>
       <FontText>logo goes here 😺</FontText>
-      <CustomButton onPress={() => {}}>First user</CustomButton>
-      <CustomButton onPress={() => {}}>Second user</CustomButton>
+      <CustomButton
+        onPress={async () => {
+          await userUseCase.logIn("email1@email.com", "1q2w3e4r");
+          navigation.navigate("Dashboard");
+        }}
+      >
+        Sample user 1
+      </CustomButton>
+      <CustomButton
+        onPress={async () => {
+          await userUseCase.logIn("email2@email.com", "1q2w3e4r");
+          navigation.navigate("Dashboard");
+        }}
+      >
+        Sample user 2
+      </CustomButton>
     </View>
   );
 }

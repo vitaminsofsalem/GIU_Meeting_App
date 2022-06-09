@@ -9,4 +9,5 @@ export interface Match {
   user1Status: MatchStatus;
   user2Status: MatchStatus;
   forRequests: string[];
+  location: string;
 }

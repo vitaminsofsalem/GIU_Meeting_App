@@ -29,4 +29,6 @@ export interface MatchUseCase {
   finishMeeting(matchId: string): Promise<void>;
 
   cancelRequest(): Promise<void>;
+
+  updateUserActiveRequest(activeRequestId?: string): Promise<void>;
 }

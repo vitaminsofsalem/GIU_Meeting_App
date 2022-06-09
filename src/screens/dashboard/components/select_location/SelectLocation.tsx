@@ -11,6 +11,7 @@ interface SelectLocationProps {
   selectedLocation?: MapLocation;
   allLocations: MapLocation[];
   onContinuePress: () => void;
+  userImage?: string;
 }
 
 export function SelectLocation(props: SelectLocationProps) {
@@ -23,7 +24,11 @@ export function SelectLocation(props: SelectLocationProps) {
         <View style={styles.profileImageContainer}>
           <Image
             style={styles.profileImage}
-            source={require("../../../../../assets/celebrity-scarlet.jpg")}
+            source={
+              props.userImage
+                ? { uri: props.userImage }
+                : require("../../../../../assets/icon.png")
+            }
           />
         </View>
       </View>

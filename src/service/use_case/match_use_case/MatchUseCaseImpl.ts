@@ -23,7 +23,7 @@ export class MatchUseCaseImpl implements MatchUseCase {
       requestCreator: currentUser,
     };
     const newReqId = await this.db.addRequest(newRequest);
-    await this.db.updateUserActiveRequest(currentUser.id, newReqId);
+    await this.db.updateUserActiveRequest(currentUser.id!!, newReqId);
 
     this.createMatchIfFoundMatchingRequest(
       currentUser,
@@ -58,7 +58,8 @@ export class MatchUseCaseImpl implements MatchUseCase {
           user2: request.requestCreator,
           user1Status: "pending",
           user2Status: "pending",
-          forRequests: [request.id, newRequestId],
+          forRequests: [request.id!!, newRequestId],
+          location: meetLocation,
         });
       }
     }
@@ -77,6 +78,7 @@ export class MatchUseCaseImpl implements MatchUseCase {
     );
     const notExpired = this.isTimingNotExpired(endTimeMillis, request.endTime);
     return (
+      currentUser.id !== request.requestCreator.id &&
       request.activity === activity &&
       request.meetLocation === meetLocation &&
       isUserMatch &&
@@ -107,13 +109,13 @@ export class MatchUseCaseImpl implements MatchUseCase {
   ): Promise<() => void> {
     const currentUser = await this.getCurrentUser();
     const unsubscribe = this.db.subscribeToMatches(
-      currentUser.id,
+      currentUser.id!!,
       async (matches) => {
         for (const match of matches) {
           if (this.isAcceptedByBothUsers(match)) {
             if (matches.length > 1) {
               //Found final match, remove others
-              await this.db.deleteMatchesOfUser(currentUser.id);
+              await this.db.deleteMatchesOfUser(currentUser.id!!);
               await this.db.addMatch(match); //Re-add since it was deleted with others
             }
 
@@ -122,7 +124,7 @@ export class MatchUseCaseImpl implements MatchUseCase {
           }
         }
         for (const match of matches) {
-          if (this.isPendingUserAction(currentUser.id, match)) {
+          if (this.isPendingUserAction(currentUser.id!!, match)) {
             onMatchChange(match);
             return;
           }
@@ -147,7 +149,7 @@ export class MatchUseCaseImpl implements MatchUseCase {
 
   async acceptMatch(matchId: string) {
     const currentUser = await this.getCurrentUser();
-    await this.db.acceptMatch(currentUser.id, matchId);
+    await this.db.acceptMatch(currentUser.id!!, matchId);
   }
 
   async rejectMatch(matchId: string) {
@@ -161,7 +163,8 @@ export class MatchUseCaseImpl implements MatchUseCase {
       const match = await this.db.getMatch(matchId);
       const request = await this.db.getRequest(currentUser.currentRequest);
 
-      await this.db.addToMeetupHistory(currentUser.id, request, match);
+      await this.db.addToMeetupHistory(match.user1.id, request, match);
+      await this.db.addToMeetupHistory(match.user2.id, request, match);
       for (const reqId of match.forRequests) {
         await this.db.deleteRequest(reqId);
       }
@@ -174,8 +177,8 @@ export class MatchUseCaseImpl implements MatchUseCase {
     if (currentUser.currentRequest) {
       await this.db.deletMatchesForRequest(currentUser.currentRequest);
       await this.db.deleteRequest(currentUser.currentRequest);
-      await this.db.deleteMatchesOfUser(currentUser.id);
-      await this.db.updateUserActiveRequest(currentUser.id, undefined);
+      await this.db.deleteMatchesOfUser(currentUser.id!!);
+      await this.db.updateUserActiveRequest(currentUser.id!!, undefined);
     }
   }
 
@@ -185,5 +188,13 @@ export class MatchUseCaseImpl implements MatchUseCase {
       throw Error("Can't get user when not logged in");
     }
     return await this.db.getUser(user.uid);
+  }
+
+  updateUserActiveRequest(activeRequestId?: string): Promise<void> {
+    const user = this.auth.getCurrentUser();
+    if (!user) {
+      throw Error("Can't update request when not logged in");
+    }
+    return this.db.updateUserActiveRequest(user.uid, activeRequestId);
   }
 }
