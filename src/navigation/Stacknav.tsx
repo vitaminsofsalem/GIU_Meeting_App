@@ -24,7 +24,7 @@ const Stack = createStackNavigator<ParamList>();
 export default function Stacknav() {
   return (
     <Stack.Navigator
-      initialRouteName="Signup"
+      initialRouteName="Login"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Signup" component={SignupPage} />

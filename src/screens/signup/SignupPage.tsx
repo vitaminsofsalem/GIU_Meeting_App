@@ -85,11 +85,12 @@ export default function SignupPage() {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             onPress={async () => {
-              (await FirebaseAuth.registerWithEmailAndPassword(
-                email,
-                password,
-                name
-              )) && navigation.navigate("Login");
+              // (await FirebaseAuth.registerWithEmailAndPassword(
+              //   email,
+              //   password,
+              //   name
+              // )) &&
+              navigation.navigate("Login");
             }}
             style={[styles.btn, styles.shadow]}
           >
