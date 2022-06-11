@@ -25,7 +25,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "googleServicesFile": "./firebase/google-services.json",
-      "package": "com.giu.rendezvous"
+      "package": "com.giu.rendezvous",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
