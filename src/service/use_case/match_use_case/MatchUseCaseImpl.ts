@@ -72,16 +72,11 @@ export class MatchUseCaseImpl implements MatchUseCase {
     activity: string,
     currentUser: User
   ) {
-    const isUserMatch = this.checkUsersMatching(
-      currentUser,
-      request.requestCreator
-    );
     const notExpired = this.isTimingNotExpired(endTimeMillis, request.endTime);
     return (
       currentUser.id !== request.requestCreator.id &&
       request.activity === activity &&
       request.meetLocation === meetLocation &&
-      isUserMatch &&
       notExpired
     );
   }
