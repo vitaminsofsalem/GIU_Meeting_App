@@ -1,6 +1,6 @@
 import firebaseAuth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
-export class FirebaseAuth {
+export default class FirebaseAuth {
   subscribeToAuthChangesAndReturnUnsubscribe(
     onAuthStateChange: (isLoggedIn: boolean) => void
   ): () => void {
