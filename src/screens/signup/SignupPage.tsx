@@ -5,6 +5,7 @@ import { Link, useNavigation } from "@react-navigation/native";
 import Login from "../login/Login";
 import FirebaseAuth from "../../service/FirebaseAuth";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { UseCaseFactory } from "../../service/UseCaseFactory";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState<string>("");
@@ -13,6 +14,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   let name = firstName + " " + lastName;
+  const user = UseCaseFactory.getUserUseCase();
   const navigation = useNavigation<any>();
   return (
     <View style={styles.container}>
@@ -85,11 +87,13 @@ export default function SignupPage() {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             onPress={async () => {
-              // (await FirebaseAuth.registerWithEmailAndPassword(
-              //   email,
-              //   password,
-              //   name
-              // )) &&
+              await user.createAccount(
+                email,
+                password,
+                firstName,
+                lastName,
+                "male"
+              );
               navigation.navigate("Login");
             }}
             style={[styles.btn, styles.shadow]}
