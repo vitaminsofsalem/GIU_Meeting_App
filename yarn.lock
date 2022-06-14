@@ -3264,25 +3264,25 @@ expo-constants@~13.1.1:
     "@expo/config" "^6.0.14"
     uuid "^3.3.2"
 
-expo-dev-client@~0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-0.10.0.tgz#bb7bc44056ac18c571419ac4b64ea1a2c09171f5"
-  integrity sha512-0vs3IGTAnKtciDXcLPEOJGcKLMZKieidCTj5jZYEVsQbySoqzazu4Xo3mXjPy0quzfjchVWEYYbdrl87LzhPwQ==
+expo-dev-client@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-1.0.0.tgz#89948d7f07adaceb4c77053535f5c4efc9a41a31"
+  integrity sha512-hqCf7IRaVOsiekFXoIifC+knGmS/hqnx6Kr+bdNbUi7UppJr7Wltww2+m0JQFIUSbjVpIEGLJIotClAi/1Vfew==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-launcher "0.11.7"
-    expo-dev-menu "0.11.0"
+    expo-dev-launcher "1.0.0"
+    expo-dev-menu "1.0.0"
     expo-dev-menu-interface "0.7.0"
     expo-manifests "~0.3.0"
     expo-updates-interface "~0.6.0"
 
-expo-dev-launcher@0.11.7:
-  version "0.11.7"
-  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-0.11.7.tgz#4ebaf116d3e693b8fe93cb7c5b90811747162882"
-  integrity sha512-VDbq6BxV5YDTOTOlGaEwaHfWfSL9VOljJXjUstFXxcWQl97NtWDNMBL3h7PNbRGtD9o5X5h1HI3pdp0ofPESPA==
+expo-dev-launcher@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-1.0.0.tgz#86b302320739df16c17defbdf4a1dba8dde05684"
+  integrity sha512-yRqDdhCo7gBJorFSypkur1o1JHrIiG1eRnAbMb3E7LXg7RdgcirwXJrgt7WtnWTrYHKR//2BBlTlqFBIG5pteA==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu "0.11.0"
+    expo-dev-menu "1.0.0"
     resolve-from "^5.0.0"
     semver "^7.3.5"
 
@@ -3291,10 +3291,10 @@ expo-dev-menu-interface@0.7.0:
   resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-0.7.0.tgz#e141a671c7a34b921e7255653665d5e8489dab08"
   integrity sha512-f/9gWLpuvXvQPeVBHH0T7qm4v2/Ynygs7dzebxqSWGDcCabfqRhuX+dv/t7CGu85m6waC9xYYnjLG7l8LC/i3Q==
 
-expo-dev-menu@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-0.11.0.tgz#bb3598fee21f2e30b25ff96acf4937d15ad9d801"
-  integrity sha512-IM10nl4oSvdKnmcZnrFvuIPposLhIRmzOEcAyrBzcm/RfLJoRXnKy+Nv8dF4qD8gbL8quITW2mgFTPyhQzR/dg==
+expo-dev-menu@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-1.0.0.tgz#2b6709bea829b2363e3b6bc3bf5fccecb59676b7"
+  integrity sha512-1420lih/NZR5NHcA2tgCfx6M2UoWBDJB9fY9Bb5/XDGXVeSsrubmu6Ck80Y4qdpDpPesQ/saZxVuilkfzBoNmQ==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
     expo-dev-menu-interface "0.7.0"
@@ -5907,6 +5907,11 @@ react-native-screens@~3.11.1:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-toast-message@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.1.5.tgz#550acb9c6c0f1ee49c6b57b65a56d34e297eb723"
+  integrity sha512-mk3rELtBEhrhWBCN6CTaw0gypgL9ZNauX3xx1LUs4uee9vc0pVsghrKxO57vroUCcNL2hDeZSLJWdQNMCkGeaQ==
 
 react-native-web@0.17.7:
   version "0.17.7"

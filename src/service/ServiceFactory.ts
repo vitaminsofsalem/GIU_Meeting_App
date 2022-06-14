@@ -2,8 +2,8 @@ import { FirebaseAuth } from "./FirebaseAuth";
 import { FirebaseDatabase } from "./FirebaseDatabase";
 
 export class ServiceFactory {
-  static firebaseAuthInstance?: FirebaseAuth;
-  static firebaseDatabaseInstance?: FirebaseDatabase;
+  private static firebaseAuthInstance?: FirebaseAuth;
+  private static firebaseDatabaseInstance?: FirebaseDatabase;
 
   static getFirebaseAuth(): FirebaseAuth {
     if (!this.firebaseAuthInstance) {

@@ -4,8 +4,8 @@ import { UserUseCase } from "./use_case/user_use_case/UserUseCase";
 import { UserUseCaseImpl } from "./use_case/user_use_case/UserUseCaseImpl";
 
 export class UseCaseFactory {
-  static matchUseCaseInstance?: MatchUseCase;
-  static userUseCaseInstance?: UserUseCase;
+  private static matchUseCaseInstance?: MatchUseCase;
+  private static userUseCaseInstance?: UserUseCase;
 
   static getMatchUseCase(): MatchUseCase {
     if (!this.matchUseCaseInstance) {

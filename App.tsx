@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Stacknav from "./src/navigation/Stacknav";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stacknav />
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stacknav />
+      </NavigationContainer>
+      <Toast />
+    </>
   );
 }
 

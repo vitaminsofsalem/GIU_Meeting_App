@@ -2,19 +2,41 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { Link, useNavigation } from "@react-navigation/native";
-import Login from "../login/Login";
-import FirebaseAuth from "../../service/FirebaseAuth";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { ServiceFactory } from "../../service/ServiceFactory";
+import { UseCaseFactory } from "../../service/UseCaseFactory";
+import FontText from "../../components/FontText";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ParamList } from "../../navigation/Stacknav";
+import Toast from "react-native-toast-message";
+import { CustomButton } from "../../components/CustomButton";
 
 export default function SignupPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<StackNavigationProp<ParamList, "Login">>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const userUseCase = UseCaseFactory.getUserUseCase();
+
+  const onLoginClick = () => {
+    setIsLoading(true);
+    userUseCase
+      .logIn(email, password)
+      .then(() => {
+        navigation.navigate("Dashboard");
+      })
+      .catch((e) => {
+        //TODO: Handle error, show toast
+        setIsLoading(false);
+        console.log(e);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Text style={styles.topLightText}>Hey there,</Text>
-        <Text style={styles.topBoldText}>Welcome Back</Text>
+        <FontText style={styles.topLightText}>Hey there,</FontText>
+        <FontText style={styles.topBoldText}>Welcome Back</FontText>
       </View>
       <View style={styles.inputGroup}>
         <View style={styles.inputView}>
@@ -38,28 +60,27 @@ export default function SignupPage() {
       </View>
       <View style={styles.bottomContainer}>
         <View style={styles.btnContainer}>
-          <TouchableOpacity
-            onPress={async () => {
-              // (await FirebaseAuth.loginWithEmailAndPassword(email, password)) &&
-              navigation.navigate("WelcomeBack");
-            }}
-            style={[styles.btn, styles.shadow]}
+          <CustomButton
+            enabled={!isLoading && email.length >= 2 && password.length >= 2}
+            onPress={onLoginClick}
           >
-            <Text style={styles.btnText}>Login</Text>
-          </TouchableOpacity>
+            Login
+          </CustomButton>
           <View style={styles.divider}>
             <View style={styles.line} />
             <View>
-              <Text style={{ fontWeight: "400" }}> Or </Text>
+              <FontText style={{ fontWeight: "400" }}> Or </FontText>
             </View>
             <View style={styles.line} />
           </View>
-          <Text style={styles.bottomText}>
+          <FontText style={styles.bottomText}>
             Don't have an account yet?{" "}
-            <Text style={{ textDecorationLine: "underline", color: "#7BD5D8" }}>
+            <FontText
+              style={{ textDecorationLine: "underline", color: "#7BD5D8" }}
+            >
               <Link to={{ screen: "Signup" }}>Register</Link>
-            </Text>
-          </Text>
+            </FontText>
+          </FontText>
         </View>
       </View>
     </View>
@@ -70,6 +91,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingBottom: 50,
   },
   topContainer: {
     minHeight: "20%",
@@ -106,7 +128,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 48,
     width: "80%",
-    border: "1px solid #F7F8F8",
     backgroundColor: "#F7F8F8",
   },
   bottomContainer: {
@@ -162,7 +183,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     top: 15,
-    left: 16.5,
   },
   line: {
     width: 130,
@@ -173,6 +193,6 @@ const styles = StyleSheet.create({
 
   bottomText: {
     top: "50%",
-    left: 55,
+    textAlign: "center",
   },
 });
