@@ -23,12 +23,26 @@ export default function SignupPage() {
     userUseCase
       .logIn(email, password)
       .then(() => {
-        navigation.navigate("Dashboard");
+        navigation.replace("Dashboard");
       })
-      .catch((e) => {
-        //TODO: Handle error, show toast
+      .catch((e: Error) => {
         setIsLoading(false);
-        console.log(e);
+        if (e.message.includes("user-not-found")) {
+          Toast.show({
+            type: "error",
+            text1: "User does not exists",
+          });
+        } else if (e.message.includes("wrong-password")) {
+          Toast.show({
+            type: "error",
+            text1: "Incorrect password",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "An error occured while signing in, please try again",
+          });
+        }
       });
   };
 

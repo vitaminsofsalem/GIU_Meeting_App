@@ -9,6 +9,10 @@ import Match from "./components/Match";
 import { Match as MatchModel } from "../../model/Match";
 import { UseCaseFactory } from "../../service/UseCaseFactory";
 import { User } from "../../model/User";
+import { CustomButton } from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ParamList } from "../../navigation/Stacknav";
 
 export default function Dashboard() {
   const [selectedLocation, setSelectedLocation] = useState<MapLocation>();
@@ -22,6 +26,8 @@ export default function Dashboard() {
   const [currentUser, setCurrentUser] = useState<User>();
   const [isInRequest, setIsInRequest] = useState(false);
   const [shouldResetWhenDeleted, setShouldResetWhenDeleted] = useState(false);
+  const navigation =
+    useNavigation<StackNavigationProp<ParamList, "Dashboard">>();
   const matchedUser =
     currentMatch?.user1.id === currentUser?.id
       ? currentMatch?.user2
@@ -150,6 +156,17 @@ export default function Dashboard() {
         onLocationSelected={onLocationSelected}
         selectedLocation={selectedLocation}
       />
+
+      <CustomButton
+        onPress={() => {
+          userUseCase.logOut();
+          navigation.replace("Login");
+        }}
+        style={{ position: "absolute", top: 10, right: 10 }}
+        color="#6b1d1d"
+      >
+        Log out
+      </CustomButton>
 
       {!isInRequest ? (
         !locationSelected ? (

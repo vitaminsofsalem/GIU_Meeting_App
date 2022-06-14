@@ -8,6 +8,7 @@ import FontText from "../../components/FontText";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ParamList } from "../../navigation/Stacknav";
 import { CustomButton } from "../../components/CustomButton";
+import Toast from "react-native-toast-message";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState<string>("");
@@ -19,7 +20,6 @@ export default function SignupPage() {
   const [isChecked, setIsChecked] = useState(false);
 
   let name = firstName + " " + lastName;
-  const user = UseCaseFactory.getUserUseCase();
   const navigation = useNavigation<StackNavigationProp<ParamList, "Signup">>();
 
   const userUseCase = UseCaseFactory.getUserUseCase();
@@ -35,12 +35,27 @@ export default function SignupPage() {
         gender.toLocaleLowerCase().startsWith("m") ? "male" : "female"
       )
       .then(() => {
-        navigation.navigate("Dashboard");
+        navigation.replace("Dashboard");
       })
-      .catch((e) => {
-        //TODO: Handle error, show toast
+      .catch((e: Error) => {
         setIsLoading(false);
         console.log(e);
+        if (e.message.includes("email-already-in-use")) {
+          Toast.show({
+            type: "error",
+            text1: "Email already in use, try logging in instead",
+          });
+        } else if (e.message.includes("invalid-email")) {
+          Toast.show({
+            type: "error",
+            text1: "Invalid email, please enter a valid email",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "An error occured while signing in, please try again",
+          });
+        }
       });
   };
   return (
@@ -121,12 +136,13 @@ export default function SignupPage() {
               password.length >= 2 &&
               firstName.length >= 2 &&
               lastName.length >= 2 &&
-              gender.length >= 1 &&
+              (gender.toLocaleLowerCase().startsWith("m") ||
+                gender.toLocaleLowerCase().startsWith("f")) &&
               isChecked
             }
             onPress={onRegisterClick}
           >
-            Login
+            Sign up
           </CustomButton>
           <View style={styles.divider}>
             <View style={styles.line} />
