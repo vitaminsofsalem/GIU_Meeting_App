@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { Link, useNavigation } from "@react-navigation/native";
 import { ServiceFactory } from "../../service/ServiceFactory";
@@ -45,6 +45,17 @@ export default function SignupPage() {
         }
       });
   };
+
+  useEffect(() => {
+    userUseCase
+      .getCurrentUser()
+      .then((user) => {
+        navigation.replace("Dashboard");
+      })
+      .catch(() => {
+        //Should give error if not logged in
+      });
+  }, []);
 
   return (
     <View style={styles.container}>

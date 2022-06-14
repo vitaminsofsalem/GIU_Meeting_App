@@ -118,18 +118,11 @@ export default function Dashboard() {
 
   //Handles reset back to normal state when a request is completed by either side
   useEffect(() => {
-    if (
-      !currentMatch ||
-      !(
-        currentMatch.user1Status === "accepted" &&
-        currentMatch.user2Status === "accepted"
-      )
-    ) {
+    if (!currentMatch) {
       if (shouldResetWhenDeleted) {
         resetState();
       }
-    }
-    if (currentMatch) {
+    } else {
       if (
         currentMatch.user1Status === "accepted" &&
         currentMatch.user2Status === "accepted"
@@ -159,8 +152,9 @@ export default function Dashboard() {
 
       <CustomButton
         onPress={() => {
-          userUseCase.logOut();
-          navigation.replace("Login");
+          userUseCase.logOut().then(() => {
+            navigation.replace("Login");
+          });
         }}
         style={{ position: "absolute", top: 10, right: 10 }}
         color="#6b1d1d"
